@@ -12,109 +12,65 @@ import {
 function Footer() {
   return (
     <footer style={{ backgroundColor: "rgb(250,250,250)" }}>
-      <div className="container border-top ">
+      <div className="container border-top">
         <div className="row mt-5">
           <div className="col">
-            <img src="media/images/logo.svg" style={{ width: "50%" }}></img>
+            <img
+              src="media/images/logo.svg"
+              alt="StockBaar Logo"
+              style={{ width: "50%" }}
+            />
             <p>&copy;2010-2026, Zerodha Broking Ltd. All rights reserved.</p>
-            <div className="d-flex gap-4 ">
-              <a href="#" className="text-dark fs-5">
+            <div className="d-flex gap-4">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaLinkedinIn />
               </a>
-              <a href="#" className="text-dark fs-5">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaXTwitter />
               </a>
-              <a href="#" className="text-dark fs-5">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaFacebookF />
               </a>
-              <a href="#" className="text-dark fs-5">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaInstagram />
               </a>
             </div>
-            <div className="d-flex gap-4 ">
-              <a href="#" className="text-dark fs-5">
+            <div className="d-flex gap-4">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaYoutube />
               </a>
-              <a href="#" className="text-dark fs-5">
+              <a href="https://wa.me" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaWhatsapp />
               </a>
-              <a href="#" className="text-dark fs-5">
+              <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="text-dark fs-5">
                 <FaTelegram />
               </a>
             </div>
           </div>
+
           <div className="col">
             <p>Company</p>
-            <a href="#" style={{ textDecoration: "none" }}>
-              About
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Products
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Pricing
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Referral programme
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Careers
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Zerodha.tech
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Press & media
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Zerodha cares (CSR)
-            </a>
+            {["About","Products","Pricing","Referral programme","Careers","Zerodha.tech","Press & media","Zerodha cares (CSR)"].map((text) => (
+              <p key={text}><a href="#" style={{ textDecoration: "none" }}>{text}</a></p>
+            ))}
           </div>
+
           <div className="col">
             <p>Support</p>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Contact
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Support portal
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Z-Connect blog
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              List of charges
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Downloads & resources
-            </a>
+            {["Contact","Support portal","Z-Connect blog","List of charges","Downloads & resources"].map((text) => (
+              <p key={text}><a href="#" style={{ textDecoration: "none" }}>{text}</a></p>
+            ))}
           </div>
+
           <div className="col">
             <p>Account</p>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Open an account
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              Fund transfer
-            </a>
-            <br></br>
-            <a href="#" style={{ textDecoration: "none" }}>
-              60 day challenge
-            </a>
+            {["Open an account","Fund transfer","60 day challenge"].map((text) => (
+              <p key={text}><a href="#" style={{ textDecoration: "none" }}>{text}</a></p>
+            ))}
           </div>
         </div>
-        <div className="mt-5 footer-muted">
+
+        <div className="mt-5 footer-muted" style={{ lineHeight: "1.6", fontSize: "0.9rem" }}>
           <p>
             Zerodha Broking Ltd.: Member of NSE, BSE & MCX – SEBI Registration
             no.: INZ000031633 CDSL/NSDL: Depository services through Zerodha
@@ -123,9 +79,9 @@ function Footer() {
             Opp. Clarence Public School, J.P Nagar 4th Phase, Bengaluru -
             560078, Karnataka, India. For any complaints pertaining to
             securities broking please write to
-            <a href="#"> complaints@zerodha.com</a>, for DP related to
-            <a href="#"> dp@zerodha.com</a>. Please ensure you carefully read
-            the Risk Disclosure Document as prescribed by SEBI | ICF
+            <a href="mailto:complaints@zerodha.com"> complaints@zerodha.com</a>, for DP related to
+            <a href="mailto:dp@zerodha.com"> dp@zerodha.com</a>. Please ensure you carefully read
+            the Risk Disclosure Document as prescribed by SEBI | ICF.
           </p>
 
           <p>
@@ -178,6 +134,7 @@ function Footer() {
             exchange investor grievance redressal forum, SEBI SCORES/ODR, or
             arbitration mechanism for such products.
           </p>
+
           <p className="d-flex flex-wrap" style={{ gap: "12px" }}>
             <a href="#">NSE</a>
             <a href="#">BSE</a>
