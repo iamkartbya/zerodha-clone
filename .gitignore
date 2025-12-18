@@ -1,17 +1,13 @@
-# Environment files
-.env
-.env.local
-.env.development
-.env.production
-
 # Node modules
-node_modules/
+frontend/node_modules/
+backend/node_modules/
+dashboard/node_modules/
 
-# Build output
-dist/
-build/
+# Build folders
+frontend/build/
+dashboard/build/
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Env files
+frontend/.env
+backend/.env
+dashboard/.env
