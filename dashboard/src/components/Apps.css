@@ -1,0 +1,42 @@
+.apps-container {
+  padding: 20px;
+}
+
+.apps-container h2 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.apps-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.app-card {
+  flex: 1 1 150px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.app-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.app-card .icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.app-card p {
+  margin: 0;
+  font-weight: 500;
+  color: #4184f3;
+}
