@@ -8,6 +8,5 @@ frontend/build/
 dashboard/build/
 
 # Env files
-frontend/.env
 backend/.env
 dashboard/.env
