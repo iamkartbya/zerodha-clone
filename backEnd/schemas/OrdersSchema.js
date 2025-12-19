@@ -1,13 +1,16 @@
-const {Schema}=require("mongoose");
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
 const OrdersSchema = new Schema({
-  name: String,
-  qty: Number,
-  price: Number,       
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  name: { type: String, required: true },
+  qty: { type: Number, required: true },
+  price: { type: Number, required: true },
   mode: {
     type: String,
-    enum: ["BUY", "SELL"],  
+    enum: ["BUY", "SELL"],
     required: true,
   },
-});
+}, { timestamps: true }); // optional timestamps
 
-module.exports={OrdersSchema};
+module.exports = { OrdersSchema };

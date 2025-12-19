@@ -1,42 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../../dashboard/services/Api";
 
 const Login = () => {
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!userId || !password) {
-      alert("Please enter User ID and Password");
-      return;
+    try {
+      const res = await loginUser(email, password);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.user.username); // store username
+      navigate("/"); // stay on frontend
+    } catch (err) {
+      alert(err.response?.data?.error || "Invalid email or password");
     }
-
-    // Backend integration later
-    console.log({ userId, password });
-    alert("Login successful (demo)");
   };
 
   return (
-    <div style={styles.container}>
+    <div style={styles.page}>
       <div style={styles.card}>
-        <h2 style={styles.title}>Login to Zerodha</h2>
+        <img src="https://zerodha.com/static/images/logo.svg" alt="Zerodha" style={styles.logo} />
+        <h2 style={styles.heading}>Login</h2>
+        <p style={styles.subtext}>Welcome back</p>
 
         <form onSubmit={handleSubmit}>
           <input
-            type="text"
-            placeholder="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             style={styles.input}
           />
-
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
             style={styles.input}
           />
 
@@ -45,57 +49,23 @@ const Login = () => {
           </button>
         </form>
 
-        <p style={styles.text}>
-          New to Zerodha? <Link to="/signup">Create an account</Link>
+        <p style={styles.footerText}>
+          Don’t have an account? <Link to="/signup">Signup</Link>
         </p>
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundColor: "#f5f7fa",
-  },
-  card: {
-    background: "#fff",
-    padding: "40px",
-    width: "360px",
-    borderRadius: "8px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "20px",
-    color: "#222",
-  },
-  input: {
-    width: "100%",
-    padding: "12px",
-    marginBottom: "15px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "14px",
-  },
-  button: {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#387ed1",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "15px",
-  },
-  text: {
-    textAlign: "center",
-    marginTop: "15px",
-    fontSize: "14px",
-  },
-};
-
 export default Login;
+
+const styles = {
+  page: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#f9fafb", fontFamily: "Inter, Arial, sans-serif" },
+  card: { width: 360, backgroundColor: "#fff", padding: 32, borderRadius: 8, boxShadow: "0 10px 25px rgba(0,0,0,0.08)", textAlign: "center" },
+  logo: { height: 28, marginBottom: 20 },
+  heading: { margin: 0, fontSize: 22, fontWeight: 600 },
+  subtext: { margin: "8px 0 20px", color: "#6b7280", fontSize: 14 },
+  input: { width: "100%", padding: "12px 14px", marginBottom: 14, borderRadius: 6, border: "1px solid #d1d5db", fontSize: 14 },
+  button: { width: "100%", padding: "12px", backgroundColor: "#387ed1", color: "#fff", border: "none", borderRadius: 6, fontSize: 15, fontWeight: 600, cursor: "pointer" },
+  footerText: { marginTop: 16, fontSize: 13, color: "#6b7280" },
+};

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../../dashboard/services/Api";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -10,12 +11,14 @@ export default function Signup() {
     agree: false,
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.agree) {
@@ -23,8 +26,19 @@ export default function Signup() {
       return;
     }
 
-    console.log("Signup data:", form);
-    alert("Signup successful (UI only)");
+    try {
+      const res = await registerUser(form.name, form.email, form.password);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.user.username);
+      navigate("/"); // stay on frontend
+    } catch (err) {
+      if (err.response?.status === 400 && err.response?.data?.error === "User already exists") {
+        alert("User already exists! Please login.");
+        navigate("/login"); // redirect to login
+      } else {
+        alert(err.response?.data?.error || "Signup failed");
+      }
+    }
   };
 
   return (
@@ -49,7 +63,6 @@ export default function Signup() {
             required
             style={styles.input}
           />
-
           <input
             type="email"
             name="email"
@@ -59,7 +72,6 @@ export default function Signup() {
             required
             style={styles.input}
           />
-
           <input
             type="tel"
             name="mobile"
@@ -69,7 +81,6 @@ export default function Signup() {
             required
             style={styles.input}
           />
-
           <input
             type="password"
             name="password"
@@ -96,74 +107,23 @@ export default function Signup() {
             Create account
           </button>
         </form>
+
         <p style={styles.footerText}>
- Already have an account? <Link to="/login">Login</Link>
-</p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );
 }
 
 const styles = {
-  page: {
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f9fafb",
-    fontFamily: "Inter, Arial, sans-serif",
-  },
-  card: {
-    width: 380,
-    backgroundColor: "#ffffff",
-    padding: 32,
-    borderRadius: 8,
-    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-    textAlign: "center",
-  },
-  logo: {
-    height: 28,
-    marginBottom: 20,
-  },
-  heading: {
-    margin: 0,
-    fontSize: 22,
-    fontWeight: 600,
-  },
-  subtext: {
-    margin: "8px 0 20px",
-    color: "#6b7280",
-    fontSize: 14,
-  },
-  input: {
-    width: "100%",
-    padding: "12px 14px",
-    marginBottom: 14,
-    borderRadius: 6,
-    border: "1px solid #d1d5db",
-    fontSize: 14,
-  },
-  checkboxLabel: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: 13,
-    color: "#374151",
-    marginBottom: 16,
-  },
-  button: {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#387ed1",
-    color: "#fff",
-    border: "none",
-    borderRadius: 6,
-    fontSize: 15,
-    fontWeight: 600,
-    cursor: "pointer",
-  },
-  footerText: {
-    marginTop: 16,
-    fontSize: 13,
-    color: "#6b7280",
-  },
+  page: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#f9fafb", fontFamily: "Inter, Arial, sans-serif" },
+  card: { width: 380, backgroundColor: "#fff", padding: 32, borderRadius: 8, boxShadow: "0 10px 25px rgba(0,0,0,0.08)", textAlign: "center" },
+  logo: { height: 28, marginBottom: 20 },
+  heading: { margin: 0, fontSize: 22, fontWeight: 600 },
+  subtext: { margin: "8px 0 20px", color: "#6b7280", fontSize: 14 },
+  input: { width: "100%", padding: "12px 14px", marginBottom: 14, borderRadius: 6, border: "1px solid #d1d5db", fontSize: 14 },
+  checkboxLabel: { display: "flex", alignItems: "center", fontSize: 13, color: "#374151", marginBottom: 16 },
+  button: { width: "100%", padding: "12px", backgroundColor: "#387ed1", color: "#fff", border: "none", borderRadius: 6, fontSize: 15, fontWeight: 600, cursor: "pointer" },
+  footerText: { marginTop: 16, fontSize: 13, color: "#6b7280" },
 };

@@ -1,6 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-
+import { Route, Routes, Navigate } from "react-router-dom";
 import Apps from "./Apps";
 import Funds from "./Funds";
 import Holdings from "./Holdings";
@@ -11,6 +10,11 @@ import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
 const Dashboard = () => {
+  const token = localStorage.getItem("token");
+
+  // Redirect to login if not logged in
+  if (!token) return <Navigate to="/login" replace />;
+
   return (
     <GeneralContextProvider>
       <div className="dashboard-container">
