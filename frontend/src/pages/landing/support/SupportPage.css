@@ -1,0 +1,36 @@
+.support-page {
+  background-color: #f8f9fa;
+}
+
+/* Make both columns visually balanced */
+.support-page .col-lg-6 {
+  padding: 1.5rem;
+}
+
+/* Optional: add white background and box shadow for Hero and Ticket */
+.support-page .col-lg-6 > * {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Links like Zerodha */
+.support-page a {
+  text-decoration: none;
+  color: rgb(56,126,209); /* Zerodha purple */
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.support-page a:hover {
+  color: rgb(56,126,209); /* Darker purple on hover */
+  text-decoration: underline;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 992px) {
+  .support-page .col-lg-6 {
+    margin-bottom: 1.5rem;
+  }
+}

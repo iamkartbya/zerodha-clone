@@ -1,0 +1,40 @@
+/* Avatar style */
+.navbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #387ed1;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 8px;
+  cursor: default;
+}
+
+/* Logout button style */
+.btn-link.nav-link {
+  color: #343a40;
+  padding: 0;
+}
+
+.btn-link.nav-link:hover {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+/* Optional: subtle shadow for fixed navbar */
+.navbar.fixed-top {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile spacing for menu items */
+@media (max-width: 576px) {
+  .navbar-nav .nav-item {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Body padding to avoid content overlap with fixed navbar */
+

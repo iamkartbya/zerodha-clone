@@ -1,0 +1,17 @@
+/* Ticket link styling */
+.ticket-link {
+  text-decoration: none;
+  color: #343a40;
+  transition: color 0.2s ease;
+}
+
+/* Hover: underline */
+.ticket-link:hover {
+  text-decoration: underline;
+  color: rgb(56,126,209);         
+}
+
+/* Optional: always underline */
+.ticket-link.underline {
+  text-decoration: underline !important;
+}

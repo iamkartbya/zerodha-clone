@@ -13,5 +13,5 @@ const HoldingsSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  HoldingsModel: mongoose.model("Holding", HoldingsSchema),
+  HoldingsModel: mongoose.model("holding", HoldingsSchema),
 };

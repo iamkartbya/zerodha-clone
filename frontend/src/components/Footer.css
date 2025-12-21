@@ -1,0 +1,53 @@
+.footer {
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding-bottom: 1rem;
+}
+
+.footer-logo {
+  width: 50%;
+  max-width: 150px;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #343a40;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #0d6efd;
+}
+
+.footer-icon {
+  font-size: 1.25rem;
+  color: #343a40;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.footer-icon:hover {
+  color: #0d6efd;
+  transform: scale(1.1);
+}
+
+.footer-legal {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.footer-legal a {
+  text-decoration: underline;
+  color: #6c757d;
+}
+
+.footer-legal a:hover {
+  color: #0d6efd;
+}
+
+/* Responsive spacing */
+@media (max-width: 576px) {
+  .footer .row > div {
+    margin-bottom: 1.5rem;
+  }
+}

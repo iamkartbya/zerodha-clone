@@ -1,0 +1,42 @@
+.support-hero {
+  background-color: rgb(56,126,209); /* Zerodha purple */
+  padding: 3rem 2rem; /* 1rem left and right space */
+  min-height: 300px;
+  border-radius: 8px;
+}
+
+.support-left {
+  background-color: rgba(255, 255, 255, 0.95); /* white box */
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.support-right .track-ticket-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 300px;
+  margin: auto;
+}
+
+/* Links like Zerodha */
+.support-link {
+  text-decoration: none;
+  color: rgb(56,126,209);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.support-link:hover {
+  color: rgb(56,126,209);
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .support-left,
+  .support-right .track-ticket-box {
+    margin-bottom: 1.5rem;
+  }
+}
