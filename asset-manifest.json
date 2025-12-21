@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/zerodha-clone/static/css/main.29270bd9.css",
+    "main.js": "/zerodha-clone/static/js/main.36d01940.js",
+    "index.html": "/zerodha-clone/index.html",
+    "main.29270bd9.css.map": "/zerodha-clone/static/css/main.29270bd9.css.map",
+    "main.36d01940.js.map": "/zerodha-clone/static/js/main.36d01940.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.29270bd9.css",
+    "static/js/main.36d01940.js"
+  ]
+}
