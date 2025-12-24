@@ -12,7 +12,7 @@ const Funds = () => {
   const fetchHoldings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3002/allHoldings", {
+      const res = await axios.get(`${process.env.REACT_APP_API}/allHoldings`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHoldings(res.data);

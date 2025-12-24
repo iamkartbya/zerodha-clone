@@ -13,7 +13,7 @@ const Orders = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.get("http://localhost:3002/orders", {
+      const res = await axios.get(`${process.env.REACT_APP_API}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

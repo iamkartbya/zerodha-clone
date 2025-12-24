@@ -1,42 +1,22 @@
-// src/index.js (combined App.js + index.js)
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import {BrowserRouter,Routes,Route} from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-
-import HomePage from "./pages/landing/home/HomePage";
-import Signup from "./pages/landing/signup/Signup";
-import Login from "./pages/landing/signup/Login";
-import AboutPage from "./pages/landing/about/AboutPage";
-import ProductPage from "./pages/landing/products/ProductPage";
-import PricingPage from "./pages/landing/pricing/PricingPage";
-import SupportPage from "./pages/landing/support/SupportPage";
-import NotFound from "./pages/landing/NotFound";
-
-import Dashboard from "./pages/dashboard/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-
-//import "./index.css";
-
-// ---------------- Layout Wrapper ----------------
-const LayoutWrapper = ({ children }) => {
-  const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/kite");
-
-  return (
-    <div className="app-container">
-      {!isDashboard && <Navbar />}
-      <div className="main-content">{children}</div>
-      {!isDashboard && <Footer />}
-    </div>
-  );
-};
-
-// ---------------- Main App ----------------
-const App = () => {
-  return (
+import Navbar from './landing_page/Navbar'
+import Footer from './landing_page/Footer';
+import NotFound from "./landing_page/NotFound";
+import HomePage from './landing_page/home/HomePage';
+import Signup from './landing_page/signup/Signup';
+import Login from "./landing_page/signup/Login";
+import AboutPage from './landing_page/about/AboutPage';
+import ProductPage from './landing_page/products/ProductPage';
+import PricingPage from './landing_page/pricing/PricingPage';
+import SupportPage from './landing_page/support/SupportPage';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <Navbar />
     <Routes>
       {/* Landing Pages */}
       <Route path="/" element={<HomePage />} />
@@ -46,31 +26,11 @@ const App = () => {
       <Route path="/product" element={<ProductPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/support" element={<SupportPage />} />
-
-      {/* Protected Dashboard */}
-      <Route
-        path="/kite/*"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Fallback */}
       <Route path="*" element={<NotFound />} />
     </Routes>
-  );
-};
-
-// ---------------- Render ----------------
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <HashRouter>
-      <LayoutWrapper>
-        <App />
-      </LayoutWrapper>
-    </HashRouter>
-  </React.StrictMode>
+    <Footer />
+  </BrowserRouter>
 );
+
+ 
+

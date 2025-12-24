@@ -13,7 +13,7 @@ const Positions = () => {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await axios.get("http://localhost:3002/allPositions", {
+    const res = await axios.get(`${process.env.REACT_APP_API}/allHoldings`, {
       headers: {
         Authorization: `Bearer ${token}`, // ✅ must include Bearer
       },

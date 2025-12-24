@@ -25,7 +25,7 @@ const BuyActionWindow = ({ stock, mode }) => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:3002/newOrder",
+        `${process.env.REACT_APP_API}/newOrder`,
         {
           name: stock.name,
           qty,

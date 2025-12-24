@@ -28,7 +28,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// -------------------- PROTECT MIDDLEWARE --------------------
+
 const protect = async (req, res, next) => {
   let token;
 
