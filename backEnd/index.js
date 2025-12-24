@@ -17,9 +17,14 @@ const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URL;
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
+// app.use(cors({
+//   origin: ["http://localhost:3000", "http://localhost:3001"], // frontend and dashboard
+//   credentials: true,
+// }));
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"], // frontend and dashboard
-  credentials: true,
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 app.use(express.json());
 
