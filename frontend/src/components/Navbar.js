@@ -21,14 +21,13 @@ function Navbar() {
         {/* Logo */}
         <Link className="navbar-brand" to="/">
           <img
-            src="/media/images/logo.svg"
+            src="media/images/logo.svg"
             className="img-fluid"
             style={{ maxWidth: 120 }}
             alt="StockBaar Logo"
           />
         </Link>
 
-        {/* Hamburger button for mobile */}
         <button
           className="navbar-toggler"
           type="button"
@@ -45,10 +44,10 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item me-4">
-              <Link className="nav-link" to="/support">Support</Link>
+              <Link className="nav-link" to="/about">About</Link>
             </li>
             <li className="nav-item me-4">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link" to="/support">Support</Link>
             </li>
             <li className="nav-item me-4">
               <Link className="nav-link" to="/product">Products</Link>

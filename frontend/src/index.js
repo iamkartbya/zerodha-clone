@@ -1,7 +1,7 @@
 // src/index.js (combined App.js + index.js)
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -67,10 +67,10 @@ const App = () => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <LayoutWrapper>
         <App />
       </LayoutWrapper>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );

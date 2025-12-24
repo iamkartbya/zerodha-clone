@@ -15,12 +15,12 @@ import { GeneralContextProvider } from "../../services/GeneralContext";
 
 // Dynamic route configuration
 const dashboardSections = [
-  { path: "/", name: "Summary", component: <Summary /> },
-  { path: "/orders", name: "Orders", component: <Orders /> },
-  { path: "/holdings", name: "Holdings", component: <Holdings /> },
-  { path: "/positions", name: "Positions", component: <Positions /> },
-  { path: "/funds", name: "Funds", component: <Funds /> },
-  { path: "/apps", name: "Apps", component: <Apps /> },
+  { index: true, component: <Summary /> },
+  { path: "orders", component: <Orders /> },
+  { path: "holdings", component: <Holdings /> },
+  { path: "positions", component: <Positions /> },
+  { path: "funds", component: <Funds /> },
+  { path: "apps", component: <Apps /> }
 ];
 
 const Dashboard = () => {
