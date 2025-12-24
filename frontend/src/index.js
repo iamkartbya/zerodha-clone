@@ -7,7 +7,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+// Dashboard
 import Dashboard from "./pages/dashboard/Dashboard";
+
 // Landing pages
 import HomePage from "./pages/landing/home/HomePage";
 import Signup from "./pages/landing/signup/Signup";
@@ -22,22 +25,21 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
-    <Navbar />
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/product" element={<ProductPage />} />
-      <Route path="/pricing" element={<PricingPage />} />
-      <Route path="/support" element={<SupportPage />} />
-      <Route path="*" element={<NotFound />} />
-       {/* Kite Dashboard */}
+      {/* Landing pages */}
+      <Route path="/" element={<><Navbar /><HomePage /><Footer /></>} />
+      <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
+      <Route path="/signup" element={<><Navbar /><Signup /><Footer /></>} />
+      <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
+      <Route path="/product" element={<><Navbar /><ProductPage /><Footer /></>} />
+      <Route path="/pricing" element={<><Navbar /><PricingPage /><Footer /></>} />
+      <Route path="/support" element={<><Navbar /><SupportPage /><Footer /></>} />
+
+      {/* Kite Dashboard (separate) */}
       <Route path="/kite/*" element={<Dashboard />} />
 
       {/* Fallback */}
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
     </Routes>
-    <Footer />
   </BrowserRouter>
 );

@@ -55,8 +55,7 @@ const Dashboard = () => {
                       path={section.path}
                       element={section.component}
                     />
-                  )
-                )}
+                  ))}
               </Routes>
             </div>
           </div>
