@@ -1,26 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { fetchHoldings } from "../../services/Api";
 import GeneralContext from "../../services/GeneralContext";
 
 const Holdings = () => {
   const { openOrderWindow } = useContext(GeneralContext);
   const [holdings, setHoldings] = useState([]);
 
-  const fetchHoldings = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(`${process.env.REACT_APP_API}/allHoldings`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setHoldings(res.data);
-    } catch (err) {
-      console.error("Failed to fetch holdings", err);
-    }
-  };
+const fetchHoldingsData = async () => {
+  try {
+    const res = await fetchHoldings();
+    setHoldings(res.data);
+  } catch (err) {
+    console.error("Failed to fetch holdings", err);
+  }
+};
+
 
   useEffect(() => {
-    fetchHoldings();
-  }, []);
+  fetchHoldingsData();
+}, []);
+
 
   return (
     <div className="holdings">

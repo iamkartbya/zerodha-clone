@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchHoldings } from "../../services/Api";
+
 
 const Summary = () => {
   const [holdings, setHoldings] = useState([]);
