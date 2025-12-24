@@ -1,30 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchHoldings } from "../../services/Api";
-import GeneralContext from "../../services/GeneralContext";
 
 const Holdings = () => {
-  const { openOrderWindow } = useContext(GeneralContext);
   const [holdings, setHoldings] = useState([]);
-
-const fetchHoldingsData = async () => {
-  try {
-    const res = await fetchHoldings();
-    setHoldings(res.data);
-  } catch (err) {
-    console.error("Failed to fetch holdings", err);
-  }
-};
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-  fetchHoldingsData();
-}, []);
+    const loadHoldings = async () => {
+      try {
+        const res = await fetchHoldings(); // interceptor handles token
+        if (res.data && res.data.length > 0) {
+          setHoldings(res.data);
+        } else {
+          setHoldings([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch holdings:", err);
+        setError(err.response?.data?.error || "Failed to fetch holdings");
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    loadHoldings();
+  }, []);
+
+  if (loading) return <p style={{ padding: 20 }}>Loading holdings...</p>;
+  if (error) return <p style={{ padding: 20, color: "red" }}>{error}</p>;
+
+  if (holdings.length === 0)
+    return <p style={{ padding: 20 }}>No holdings available</p>;
 
   return (
     <div className="holdings">
       <h3>Holdings ({holdings.length})</h3>
-
       <table className="table">
         <thead>
           <tr>
@@ -36,12 +46,10 @@ const fetchHoldingsData = async () => {
             <th>Actions</th>
           </tr>
         </thead>
-
         <tbody>
           {holdings.map((stock, index) => {
             const pnl = ((stock.price - stock.avg) * stock.qty).toFixed(2);
             const isLoss = pnl < 0;
-
             return (
               <tr key={index}>
                 <td>{stock.name}</td>
@@ -50,19 +58,8 @@ const fetchHoldingsData = async () => {
                 <td>{stock.price}</td>
                 <td className={isLoss ? "loss" : "profit"}>{pnl}</td>
                 <td>
-                  <button
-                    className="btn btn-sm btn-success"
-                    onClick={() => openOrderWindow(stock, "BUY")}
-                  >
-                    BUY
-                  </button>
-
-                  <button
-                    className="btn btn-sm btn-danger ms-2"
-                    onClick={() => openOrderWindow(stock, "SELL")}
-                  >
-                    SELL
-                  </button>
+                  <button className="btn btn-sm btn-success">BUY</button>
+                  <button className="btn btn-sm btn-danger ms-2">SELL</button>
                 </td>
               </tr>
             );
