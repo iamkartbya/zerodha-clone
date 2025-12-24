@@ -7,11 +7,11 @@ function Universe() {
       <h1>The Zerodha Universe</h1>
       <p>Extend your trading and investment experience even further with our partner platforms</p>
         <div className="col-4 p-3 mt-5">
-          <img src="media/images/smallcaselogo.png" style={{width:"80%"}} />
+          <img src="media\images\smallcaseLogo.png" style={{width:"80%"}} />
           <p className="text-muted text-small mt-3">Thematic investing platform <br></br>that helps you invest in diversified<br></br>baskets of stocks on ETFs. </p>
         </div>
         <div className="col-4 p-3 mt-5">
-         <img src="media/images/zerodhafundhouse.png" style={{width:"80%"}} />
+         <img src="media\images\zerodhaFundhouse.png" style={{width:"80%"}} />
           <p className="text-muted text-small mt-3">Our asset management venture<br></br>that is creating simple and transparent index <br></br>funds to help you save for your goals.</p>
         </div>
         <div className="col-4 p-3 mt-5 ">

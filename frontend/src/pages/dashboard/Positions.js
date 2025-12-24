@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchPositions } from "../../services/Api";
 
 const Positions = () => {
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPositions();
+    loadPositions();
   }, []);
 
- const fetchPositions = async () => {
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await axios.get(`${process.env.REACT_APP_API}/allHoldings`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // ✅ must include Bearer
-      },
-    });
-
-    setPositions(res.data);
-  } catch (err) {
-    console.error(err);
-    alert(err.response?.data?.error || "Failed to load positions");
-  } finally {
-    setLoading(false);
-  }
-};
+  const loadPositions = async () => {
+    try {
+      const res = await fetchPositions();
+      setPositions(res.data);
+    } catch (err) {
+      console.error("Positions fetch failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <p style={{ padding: 20 }}>Loading positions...</p>;
@@ -66,17 +58,12 @@ const Positions = () => {
                   <td>₹ {pos.price}</td>
 
                   <td
-                    style={{
-                      color: isLoss ? "red" : "green",
-                      fontWeight: 600,
-                    }}
+                    className={isLoss ? "text-danger fw-semibold" : "text-success fw-semibold"}
                   >
                     ₹ {pnl.toFixed(2)}
                   </td>
 
-                  <td className={pos.isLoss ? "loss" : "profit"}>
-                    {pos.day || "—"}
-                  </td>
+                  <td>{pos.day || "—"}</td>
                 </tr>
               );
             })}

@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchOrders } from "../../services/Api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchOrders();
+    loadOrders();
   }, []);
 
-  const fetchOrders = async () => {
+  const loadOrders = async () => {
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get(`${process.env.REACT_APP_API}/orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await fetchOrders();
       setOrders(res.data);
     } catch (err) {
-      console.error(err);
-      alert("Failed to load orders");
+      console.error("Orders fetch failed:", err);
     } finally {
       setLoading(false);
     }
@@ -57,17 +49,15 @@ const Orders = () => {
                 <td>{order.name}</td>
 
                 <td
-                  style={{
-                    color: order.mode === "BUY" ? "green" : "red",
-                    fontWeight: 600,
-                  }}
+                  className={
+                    order.mode === "BUY" ? "text-success fw-semibold" : "text-danger fw-semibold"
+                  }
                 >
                   {order.mode}
                 </td>
 
                 <td>{order.qty}</td>
                 <td>₹ {order.price}</td>
-
                 <td>{order.status || "COMPLETED"}</td>
 
                 <td style={{ fontSize: 12 }}>
