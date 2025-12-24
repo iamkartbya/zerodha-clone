@@ -1,7 +1,7 @@
 // App.js
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./dashboard/Dashboard";
-import Login from "./landing_page/login/Login";
+import Login from "../landing/signup/Login";
 
 function App() {
   return (

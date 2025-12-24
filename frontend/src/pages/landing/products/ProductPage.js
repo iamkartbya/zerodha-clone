@@ -9,7 +9,6 @@ function ProductPage() {
   return (
     <>
       <Hero />
-
       {/* Kite Product (Protected) */}
       <LeftSection
         imageURL="media/images/kite.png"
