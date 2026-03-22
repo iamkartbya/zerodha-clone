@@ -10,7 +10,7 @@ const { UserModel } = require("./model/UserModel");
 const { OrdersModel } = require("./model/OrdersModel");
 const { HoldingsModel } = require("./model/HoldingModels");
 const { PositionsModel } = require("./model/PositionsModel");
-const { WatchlistModel } = require("./model/WatchlistModel");
+const { WatchlistModel } = require("./model/WatchListModel");
 // Middleware
 const app = express();
 const PORT = process.env.PORT || 3002;
