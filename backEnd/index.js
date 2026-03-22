@@ -10,7 +10,7 @@ const { UserModel } = require("./model/UserModel");
 const { OrdersModel } = require("./model/OrdersModel");
 const { HoldingsModel } = require("./model/HoldingModels");
 const { PositionsModel } = require("./model/PositionsModel");
-
+const { WatchlistModel } = require("./model/WatchlistModel");
 // Middleware
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -202,6 +202,42 @@ app.get("/allPositions", protect, async (req, res) => {
   }
 });
 
+app.get("/watchlist", protect, async (req, res) => {
+  try {
+    const watchlist = await WatchlistModel.find({ user: req.user._id });
+    res.json(watchlist);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Add a stock to watchlist
+app.post("/watchlist", protect, async (req, res) => {
+  const { name, price } = req.body;
+  if (!name) return res.status(400).json({ error: "Stock name required" });
+
+  try {
+    const exists = await WatchlistModel.findOne({ user: req.user._id, name });
+    if (exists) return res.status(400).json({ error: "Already in watchlist" });
+
+    const stock = new WatchlistModel({ user: req.user._id, name, price });
+    await stock.save();
+    res.status(201).json(stock);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Remove stock from watchlist
+app.delete("/watchlist/:id", protect, async (req, res) => {
+  try {
+    const stock = await WatchlistModel.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+    if (!stock) return res.status(404).json({ error: "Not found" });
+    res.json({ message: "Removed from watchlist" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // -------------------- START SERVER --------------------
 mongoose.connect(MONGO_URI)
   .then(() => {

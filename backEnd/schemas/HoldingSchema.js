@@ -1,5 +1,5 @@
-const mongoose=require("mongoose");
-const {Schema}=mongoose;
+const mongoose = require("mongoose");
+
 const HoldingsSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -10,8 +10,6 @@ const HoldingsSchema = new mongoose.Schema({
   qty: Number,
   avg: Number,
   price: Number,
-});
+}, { timestamps: true });
 
-module.exports = {
-  HoldingsModel: mongoose.model("holding", HoldingsSchema),
-};
+module.exports = HoldingsSchema;

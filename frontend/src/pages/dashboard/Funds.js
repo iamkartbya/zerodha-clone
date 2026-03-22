@@ -7,24 +7,21 @@ const Funds = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const loadFunds = async () => {
-      try {
-        const res = await fetchHoldings();
-        setHoldings(res.data || []);
-      } catch (err) {
-        console.error("Failed to fetch funds:", err);
-        setError(err.response?.data?.error || "Failed to fetch funds");
-      } finally {
+    fetchHoldings()
+      .then((res) => {
+        setHoldings(res.data);
         setLoading(false);
-      }
-    };
-    loadFunds();
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load funds data");
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <p style={{ padding: 20 }}>Loading funds...</p>;
   if (error) return <p style={{ padding: 20, color: "red" }}>{error}</p>;
 
-  // Basic calculations
   const usedMargin = holdings.reduce((sum, h) => sum + h.qty * h.avg, 0);
   const currentValue = holdings.reduce((sum, h) => sum + h.qty * h.price, 0);
   const availableCash = currentValue - usedMargin;

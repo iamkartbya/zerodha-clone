@@ -7,23 +7,21 @@ const Positions = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const loadPositions = async () => {
-      try {
-        const res = await fetchPositions();
-        setPositions(res.data || []);
-      } catch (err) {
-        console.error("Failed to fetch positions:", err);
-        setError(err.response?.data?.error || "Failed to fetch positions");
-      } finally {
+    fetchPositions()
+      .then((res) => {
+        setPositions(res.data);
         setLoading(false);
-      }
-    };
-    loadPositions();
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load positions");
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <p style={{ padding: 20 }}>Loading positions...</p>;
   if (error) return <p style={{ padding: 20, color: "red" }}>{error}</p>;
-  if (positions.length === 0) return <p style={{ padding: 20 }}>No open positions</p>;
+  if (!positions.length) return <p style={{ padding: 20 }}>No open positions</p>;
 
   return (
     <div className="positions">

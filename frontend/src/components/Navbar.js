@@ -17,7 +17,7 @@ function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light border-bottom bg-white fixed-top">
-      <div className="container p-2">
+      <div className="container ">
         {/* Logo */}
         <Link className="navbar-brand" to="/">
           <img
@@ -61,7 +61,7 @@ function Navbar() {
                 <li className="nav-item me-3">
                   <Link className="nav-link" to="/signup">Signup</Link>
                 </li>
-                <li className="nav-item me-3">
+                <li className="nav-item me-1">
                   <Link className="nav-link" to="/login">Login</Link>
                 </li>
               </>

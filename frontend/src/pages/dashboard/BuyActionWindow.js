@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
 import GeneralContext from "../../services/GeneralContext";
+import { HoldingsContext } from "../../context/HoldingsContext";
 
 const BuyActionWindow = ({ stock, mode }) => {
   const [qty, setQty] = useState(1);
   const [price, setPrice] = useState(stock?.price || 0);
 
   const { closeOrderWindow } = useContext(GeneralContext);
+  const { buyStock, sellStock } = useContext(HoldingsContext);
 
   useEffect(() => {
     setPrice(stock?.price || 0);
@@ -14,35 +15,21 @@ const BuyActionWindow = ({ stock, mode }) => {
 
   const totalValue = (qty * price).toFixed(2);
 
-  const handleOrder = async () => {
-    if (qty <= 0) return alert("Quantity must be greater than 0");
+ const handleOrder = async () => {
+  if (qty <= 0) return alert("Quantity must be greater than 0");
 
-    if (mode === "SELL" && qty > stock.qty) {
-      return alert(`You can sell max ${stock.qty} shares`);
-    }
+  if (mode === "SELL" && qty > stock.qty) {
+    return alert(`You can sell max ${stock.qty} shares`);
+  }
 
-    try {
-      const token = localStorage.getItem("token");
+  if (mode === "BUY") {
+    await buyStock({ name: stock.name, qty, price });
+  } else {
+    await sellStock({ name: stock.name, qty, price });
+  }
 
-      await axios.post(
-        `${process.env.REACT_APP_API}/newOrder`,
-        {
-          name: stock.name,
-          qty,
-          price,
-          mode,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      alert(`${mode} order placed successfully`);
-      closeOrderWindow();
-    } catch (err) {
-      alert(err.response?.data?.error || "Order failed");
-    }
-  };
+  closeOrderWindow();
+};
 
   return (
     <div
@@ -51,12 +38,17 @@ const BuyActionWindow = ({ stock, mode }) => {
     >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
-          <div className={`modal-header ${mode === "BUY" ? "bg-success" : "bg-danger"} text-white`}>
+          <div
+            className={`modal-header ${
+              mode === "BUY" ? "bg-success" : "bg-danger"
+            } text-white`}
+          >
             <h5 className="modal-title">
               {mode} {stock.name}
             </h5>
-            <button type="button" className="btn-close" onClick={closeOrderWindow}></button>
+            <button className="btn-close" onClick={closeOrderWindow}></button>
           </div>
+
           <div className="modal-body">
             <div className="mb-3">
               <label className="form-label">Quantity</label>
@@ -84,9 +76,12 @@ const BuyActionWindow = ({ stock, mode }) => {
               <strong>Total:</strong> ₹ {totalValue}
             </p>
           </div>
+
           <div className="modal-footer">
             <button
-              className={`btn ${mode === "BUY" ? "btn-success" : "btn-danger"}`}
+              className={`btn ${
+                mode === "BUY" ? "btn-success" : "btn-danger"
+              }`}
               onClick={handleOrder}
             >
               {mode}

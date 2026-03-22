@@ -32,7 +32,7 @@
 /* Mobile spacing for menu items */
 @media (max-width: 576px) {
   .navbar-nav .nav-item {
-    margin-bottom: 0.5rem;
+     margin-bottom: 0.5rem; 
   }
 }
 

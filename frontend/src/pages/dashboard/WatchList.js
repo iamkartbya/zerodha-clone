@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Tooltip, Grow } from "@mui/material";
 import {
   BarChartOutlined,
@@ -6,46 +6,28 @@ import {
   KeyboardArrowUp,
   MoreHoriz,
 } from "@mui/icons-material";
-import { fetchHoldings } from "../../services/Api";
 import GeneralContext from "../../services/GeneralContext";
 import { DoughnutChart } from "./DoughnoutChart";
+import { watchlist as watchlistData } from "../../data/data";
 
 const WatchList = () => {
-  const [watchlist, setWatchlist] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { openOrderWindow } = useContext(GeneralContext);
 
-  // Fetch holdings from API
-  useEffect(() => {
-    const loadHoldings = async () => {
-      try {
-        const res = await fetchHoldings(); // uses axios interceptor
-        setWatchlist(res.data);
-      } catch (err) {
-        console.error("Failed to fetch holdings", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadHoldings();
-  }, []);
+  // 🔥 Static watchlist from data.js
+  const [watchlist] = useState(watchlistData);
 
-  if (loading) return <p style={{ padding: 20 }}>Loading watchlist...</p>;
-  if (!watchlist.length) return <p style={{ padding: 20 }}>No holdings available</p>;
-
-  // Chart data
-  const data = {
+  const chartData = {
     labels: watchlist.map((s) => s.name),
     datasets: [
       {
         label: "Price",
-        data: watchlist.map((s) => s.price),
+        data: watchlist.map((s) => s.price || 0),
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",
           "rgba(255, 206, 86, 0.6)",
           "rgba(75, 192, 192, 0.6)",
           "rgba(153, 102, 255, 0.6)",
-          "rgba(255, 159, 64, 0.6)",
         ],
         borderWidth: 1,
       },
@@ -59,34 +41,24 @@ const WatchList = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        minHeight: 0,
         borderRight: "1px solid #eee",
       }}
     >
-      {/* SEARCH BAR */}
-      <div
-        className="px-3 py-2 border-bottom d-flex align-items-center gap-2"
-        style={{ flexShrink: 0 }}
-      >
+      {/* SEARCH */}
+      <div className="px-3 py-2 border-bottom d-flex align-items-center gap-2">
         <input
           type="text"
           placeholder="Search eg: INFY, BSE, Nifty Fut ..."
           className="form-control form-control-sm"
-          style={{ fontSize: "13px" }}
         />
-        <span className="text-muted small" style={{ whiteSpace: "nowrap" }}>
-          {watchlist.length} / 50
-        </span>
+        <span className="text-muted small">{watchlist.length} / 50</span>
       </div>
 
-      {/* TABLE HEADER */}
-      <div
-        className="px-3 py-2 border-bottom text-muted small d-flex fw-semibold"
-        style={{ flexShrink: 0 }}
-      >
+      {/* HEADER */}
+      <div className="px-3 py-2 border-bottom text-muted small d-flex fw-semibold">
         <div className="col-4">Name</div>
+        <div className="col-2 text-end">Qty</div>
         <div className="col-2 text-end">Avg</div>
-        <div className="col-2 text-end">Price</div>
         <div className="col-2 text-end">Day</div>
         <div className="col-2 text-end">Net</div>
       </div>
@@ -94,16 +66,14 @@ const WatchList = () => {
       {/* LIST */}
       <ul
         className="list"
-        style={{
-          flexGrow: 1,
-          minHeight: 0,
-          overflowY: "auto",
-          margin: 0,
-          padding: 0,
-        }}
+        style={{ margin: 0, padding: 0, overflowY: "auto" }}
       >
         {watchlist.map((stock, index) => (
-          <WatchListItem stock={stock} key={index} />
+          <WatchListItem
+            key={index}
+            stock={stock}
+            openOrderWindow={openOrderWindow}
+          />
         ))}
       </ul>
 
@@ -111,14 +81,11 @@ const WatchList = () => {
       <div
         style={{
           height: "260px",
-          width: "100%",
           padding: "12px",
           borderTop: "1px solid #eee",
-          boxSizing: "border-box",
-          flexShrink: 0,
         }}
       >
-        <DoughnutChart data={data} />
+        <DoughnutChart data={chartData} />
       </div>
     </div>
   );
@@ -126,46 +93,45 @@ const WatchList = () => {
 
 export default WatchList;
 
-// ---------------- WatchListItem ----------------
-const WatchListItem = ({ stock }) => {
-  const [showActions, setShowActions] = useState(false);
-  const { openOrderWindow } = useContext(GeneralContext);
+/* ================= WATCHLIST ITEM ================= */
 
-  const isNegativeDay = String(stock.percent ?? "0").startsWith("-");
+const WatchListItem = ({ stock, openOrderWindow }) => {
+  const [showActions, setShowActions] = useState(false);
+
+  const day = stock.day || "—";
+  const net = stock.net || "—";
+  const isNegativeDay = day.startsWith("-");
 
   return (
     <li
-      className="px-3 py-2 border-bottom position-relative watchlist-row"
+      className="px-3 py-2 border-bottom position-relative"
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
-      style={{ cursor: "pointer" }}
     >
       <div className="d-flex align-items-center small">
         <div className="col-4 fw-semibold">{stock.name}</div>
-        <div className="col-2 text-end text-muted">{stock.avg ?? "-"}</div>
-        <div className="col-2 text-end fw-semibold">{stock.price}</div>
+        <div className="col-2 text-end">{stock.qty || 0}</div>
+        <div className="col-2 text-end text-muted">{stock.avg || 0}</div>
+
         <div
           className={`col-2 text-end ${
             isNegativeDay ? "text-danger" : "text-success"
           }`}
         >
-          {isNegativeDay ? (
-            <KeyboardArrowDown fontSize="small" />
-          ) : (
-            <KeyboardArrowUp fontSize="small" />
-          )}
-          {stock.percent ?? "-"}
+          {day !== "—" &&
+            (isNegativeDay ? (
+              <KeyboardArrowDown fontSize="small" />
+            ) : (
+              <KeyboardArrowUp fontSize="small" />
+            ))}
+          {day}
         </div>
-        <div className="col-2 text-end fw-semibold text-dark">
-          {stock.net ?? stock.percent ?? "-"}
-        </div>
+
+        <div className="col-2 text-end fw-semibold">{net}</div>
       </div>
 
       {showActions && (
-        <div
-          className="position-absolute top-50 end-0 translate-middle-y me-2 d-flex gap-1"
-          style={{ zIndex: 10 }}
-        >
+        <div className="position-absolute top-50 end-0 translate-middle-y me-2 d-flex gap-1">
           <Tooltip title="Buy" arrow TransitionComponent={Grow}>
             <button
               className="btn btn-sm btn-success"

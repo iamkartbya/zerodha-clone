@@ -1,4 +1,4 @@
-export const watchlist = [
+export const holdings = [
   {
     name: "INFY",
     price: 1555.45,
@@ -56,7 +56,7 @@ export const watchlist = [
 ];
 
 // holdings
-export const holdings = [
+export const watchlist = [
   {
     name: "BHARTIARTL",
     qty: 2,

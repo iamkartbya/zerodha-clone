@@ -1,26 +1,24 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import BuyActionWindow from "../pages/dashboard/BuyActionWindow";
 
-const GeneralContext = React.createContext({
-  openOrderWindow: (stock, mode) => {},
-  closeOrderWindow: () => {},
-});
+const GeneralContext = createContext();
 
-export const GeneralContextProvider = (props) => {
+export const GeneralContextProvider = ({ children }) => {
   const [isOrderWindowOpen, setIsOrderWindowOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [orderMode, setOrderMode] = useState("BUY");
 
+  //  Open Buy / Sell window
   const openOrderWindow = (stock, mode = "BUY") => {
-    setIsOrderWindowOpen(true);
-    setSelectedStock(stock); // full stock object
+    setSelectedStock(stock);
     setOrderMode(mode);
+    setIsOrderWindowOpen(true);
   };
 
+  //  Close window
   const closeOrderWindow = () => {
     setIsOrderWindowOpen(false);
     setSelectedStock(null);
-    setOrderMode("BUY");
   };
 
   return (
@@ -28,18 +26,13 @@ export const GeneralContextProvider = (props) => {
       value={{
         openOrderWindow,
         closeOrderWindow,
-        selectedStock,
-        orderMode,
-      }}
-    >
-      {props.children}
+      }
+      } >
+      {children}
 
+      {/*  Global Buy/Sell Modal */}
       {isOrderWindowOpen && selectedStock && (
-        <BuyActionWindow
-          uid={selectedStock.name}
-          stock={selectedStock}
-          mode={orderMode}
-        />
+        <BuyActionWindow stock={selectedStock} mode={orderMode} />
       )}
     </GeneralContext.Provider>
   );

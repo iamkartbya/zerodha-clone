@@ -7,23 +7,21 @@ const Orders = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        const res = await fetchOrders();
-        setOrders(res.data || []);
-      } catch (err) {
-        console.error("Failed to fetch orders:", err);
-        setError(err.response?.data?.error || "Failed to fetch orders");
-      } finally {
+    fetchOrders()
+      .then((res) => {
+        setOrders(res.data);
         setLoading(false);
-      }
-    };
-    loadOrders();
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load orders");
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <p style={{ padding: 20 }}>Loading orders...</p>;
   if (error) return <p style={{ padding: 20, color: "red" }}>{error}</p>;
-  if (orders.length === 0) return <p style={{ padding: 20 }}>No orders placed yet</p>;
+  if (!orders.length) return <p style={{ padding: 20 }}>No orders placed yet</p>;
 
   return (
     <div className="orders">
@@ -43,7 +41,12 @@ const Orders = () => {
           {orders.map((order, index) => (
             <tr key={index}>
               <td>{order.name}</td>
-              <td style={{ color: order.mode === "BUY" ? "green" : "red", fontWeight: 600 }}>
+              <td
+                style={{
+                  color: order.mode === "BUY" ? "green" : "red",
+                  fontWeight: 600,
+                }}
+              >
                 {order.mode}
               </td>
               <td>{order.qty}</td>

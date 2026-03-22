@@ -4,6 +4,10 @@ import "./index.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Context Providers
+import { HoldingsProvider } from "./context/HoldingsContext";
+import { GeneralContextProvider } from "./services/GeneralContext";
+
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -24,22 +28,98 @@ import NotFound from "./pages/landing/NotFound";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <BrowserRouter>
-    <Routes>
-      {/* Landing pages */}
-      <Route path="/" element={<><Navbar /><HomePage /><Footer /></>} />
-      <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
-      <Route path="/signup" element={<><Navbar /><Signup /><Footer /></>} />
-      <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
-      <Route path="/product" element={<><Navbar /><ProductPage /><Footer /></>} />
-      <Route path="/pricing" element={<><Navbar /><PricingPage /><Footer /></>} />
-      <Route path="/support" element={<><Navbar /><SupportPage /><Footer /></>} />
+  <HoldingsProvider>
+    <GeneralContextProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Landing pages */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <HomePage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <Navbar />
+                <Login />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <>
+                <Navbar />
+                <Signup />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <>
+                <Navbar />
+                <AboutPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/product"
+            element={
+              <>
+                <Navbar />
+                <ProductPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <>
+                <Navbar />
+                <PricingPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <>
+                <Navbar />
+                <SupportPage />
+                <Footer />
+              </>
+            }
+          />
 
-      {/* Kite Dashboard (separate) */}
-      <Route path="/kite/*" element={<Dashboard />} />
+          {/* Kite Dashboard */}
+          <Route path="/kite/*" element={<Dashboard />} />
 
-      {/* Fallback */}
-      <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
-    </Routes>
-  </BrowserRouter>
+          {/* Fallback */}
+          <Route
+            path="*"
+            element={
+              <>
+                <Navbar />
+                <NotFound />
+                <Footer />
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </GeneralContextProvider>
+  </HoldingsProvider>
 );

@@ -3,7 +3,7 @@ import "./Hero.css";
 
 function Hero() {
   return (
-    <section className="support-hero mt-2">
+    <section className="support-hero mt-5" style={{marginTop:"10px"}}>
       <div className="container">
         <div className="row align-items-center support-hero-row">
           

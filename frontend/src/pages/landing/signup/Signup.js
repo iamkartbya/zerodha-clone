@@ -42,7 +42,7 @@ export default function Signup() {
   };
 
   return (
-    <div style={styles.page}>
+    <div style={{ ...styles.page, marginTop: "60px" }}>
       <div style={styles.card}>
         <img
           src="https://zerodha.com/static/images/logo.svg"
